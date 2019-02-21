@@ -1,0 +1,8 @@
+Idea: Write program to log hours worked on distinct tasks.
+
+Iteration 1:
+Program revolves around beginTask() and endTask(). Once the program is started the user is presented with a welcome message and prompted with the name of the task. Upon completion of user input, beginTask() is called and the timer begins. endTask() immediate follows, but the timer does not stop until user input is entered, at which point the the elapsed seconds are converted into days, hours, minutes and seconds.
+
+Future features:
+- Memory feature: User can work on previously defined task, total work done increments
+- Graphical representaiton of logged hours
