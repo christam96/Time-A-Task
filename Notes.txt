@@ -1,0 +1,4 @@
+Notes:
+-> Cannot modify the inside contents of a file without rewriting it
+    - This is an OS thing, not a Python thing. It is the same in all languages
+
