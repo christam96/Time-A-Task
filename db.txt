@@ -1,9 +1,8 @@
-proj1:519
-proj2:300
-proj3:120
-next4:273
-yes:37
-no:8
-hallo2:13
-new:13
-hallohallo:7
+yes:5
+no:3
+why:2
+fine:0
+yes1:0
+no1:0
+no2:0
+no3:0
