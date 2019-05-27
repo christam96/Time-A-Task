@@ -1,0 +1,9 @@
+proj1:8819433
+proj2:301
+proj3:122
+next4:279
+yes:114
+no:10
+hallo2:13
+new:24
+hallohallo:7
