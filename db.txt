@@ -1,8 +1,1 @@
-yes:5
-no:3
-why:2
-fine:0
-yes1:0
-no1:0
-no2:0
-no3:0
+yes:0
