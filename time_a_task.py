@@ -1,4 +1,5 @@
 import time
+import os
 
 # Imports for replace()
 from tempfile import mkstemp
@@ -54,7 +55,7 @@ def checkDB(taskName):
     dbString.read()
     if taskName in open("db.txt").read():
         # Task already exists
-        lines = [line.rstrip('\n') for line in open('db.txt')]
+        lines = [line.rstrip('\n') for line in open("db.txt")]
         for task in lines:
             split = task.split(":")
             name = split[0]
@@ -63,10 +64,15 @@ def checkDB(taskName):
                 prevTime = int(time)
     else:
         # Task does not yet exist
-        with open("db.txt", 'a') as dbFile:
-            print(taskName + " was added to the database")
-            dbFile.write('\n' + taskName  + ":0")
-        
+        if os.stat("db.txt").st_size > 0:
+            with open("db.txt", 'a') as db:
+                print(taskName + " was added to the database")
+                db.write('\n' + taskName  + ":0")
+        else:
+            with open("db.txt", 'a') as db:
+                print(taskName + " was added to the database")
+                db.write(taskName  + ":0")
+
 def updateDB(taskName, elapsedSeconds): 
     global prevTime
     global newTime
