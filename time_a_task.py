@@ -6,6 +6,8 @@ from tempfile import mkstemp
 from shutil import move
 from os import fdopen, remove
 
+dbFile = "db.txt"
+
 taskName = ""
 start = 0
 day = 0
@@ -17,8 +19,6 @@ elapsedSeconds = 0
 prevTime = 0
 newTime = 0
 formatTime = 0
-
-dbFile = "db.txt"
 
 def beginTask():
     global start
@@ -52,7 +52,7 @@ def convertSeconds(elapsedSeconds):
     print('{:.0f}'.format(hour),"h", '{:.0f}'.format(minutes),"m", '{:.0f}'.format(seconds),"s")
 
 def checkDB(taskName):
-    global prevTime, dbFile
+    global prevTime
     dbString = open(dbFile, 'r')
     dbString.read()
     if taskName in open(dbFile).read():
@@ -67,20 +67,18 @@ def checkDB(taskName):
     else:
         # Task does not yet exist
         if os.stat(dbFile).st_size > 0:
-            with open(dbFile, 'a') as dbFile:
+            with open(dbFile, 'a') as db:
                 print(taskName + " was added to the database")
-                dbFile.write('\n' + taskName  + ":0")
+                db.write('\n' + taskName  + ":0")
         else:
-            with open(dbFile, 'a') as dbFile:
+            with open(dbFile, 'a') as db:
                 print(taskName + " was added to the database")
-                dbFile.write(taskName  + ":0")
+                db.write(taskName  + ":0")
 
-        
-        
 def updateDB(taskName, elapsedSeconds): 
-    global prevTime, dbFile
+    global prevTime
     global newTime
-    global formatTime
+    global formatTime, dbFile
     lines = [line.rstrip('\n') for line in open(dbFile)]
     for task in lines:
         split = task.split(":")
@@ -90,10 +88,8 @@ def updateDB(taskName, elapsedSeconds):
             newTime = int(prevTime) + elapsedSeconds
             formatTime = '{:.0f}'.format(newTime)
             newTask = taskName + ":" + str(formatTime)
-            # openFile = open(dbFile, 'a')
-            replace(task, newTask)
-            # with open(dbFile, 'a') as dbFile:
-            #     replace(dbFile, task, newTask)
+            with open(dbFile, 'a'):
+                replace(task, newTask)
 
 def replace(pattern, subst):
     global dbFile
@@ -107,7 +103,7 @@ def replace(pattern, subst):
     move(abs_path, dbFile)
 
 def getTime(taskName):
-    lines = [line.rstrip('\n') for line in open(dbFile)]
+    lines = [line.rstrip('\n') for line in open('db.txt')]
     for task in lines:
         split = task.split(":")
         name = split[0]
