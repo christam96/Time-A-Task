@@ -6,8 +6,6 @@ from tempfile import mkstemp
 from shutil import move
 from os import fdopen, remove
 
-dbFile = "db.txt"
-
 taskName = ""
 start = 0
 day = 0
@@ -53,11 +51,11 @@ def convertSeconds(elapsedSeconds):
 
 def checkDB(taskName):
     global prevTime
-    dbString = open(dbFile, 'r')
+    dbString = open("db.txt", 'r')
     dbString.read()
-    if taskName in open(dbFile).read():
+    if taskName in open("db.txt").read():
         # Task already exists
-        lines = [line.rstrip('\n') for line in open(dbFile)]
+        lines = [line.rstrip('\n') for line in open("db.txt")]
         for task in lines:
             split = task.split(":")
             name = split[0]
@@ -66,20 +64,20 @@ def checkDB(taskName):
                 prevTime = int(time)
     else:
         # Task does not yet exist
-        if os.stat(dbFile).st_size > 0:
-            with open(dbFile, 'a') as db:
+        if os.stat("db.txt").st_size > 0:
+            with open("db.txt", 'a') as db:
                 print(taskName + " was added to the database")
                 db.write('\n' + taskName  + ":0")
         else:
-            with open(dbFile, 'a') as db:
+            with open("db.txt", 'a') as db:
                 print(taskName + " was added to the database")
                 db.write(taskName  + ":0")
 
 def updateDB(taskName, elapsedSeconds): 
     global prevTime
     global newTime
-    global formatTime, dbFile
-    lines = [line.rstrip('\n') for line in open(dbFile)]
+    global formatTime
+    lines = [line.rstrip('\n') for line in open('db.txt')]
     for task in lines:
         split = task.split(":")
         name = split[0]
@@ -88,19 +86,18 @@ def updateDB(taskName, elapsedSeconds):
             newTime = int(prevTime) + elapsedSeconds
             formatTime = '{:.0f}'.format(newTime)
             newTask = taskName + ":" + str(formatTime)
-            with open(dbFile, 'a'):
-                replace(task, newTask)
+            with open("db.txt", 'a') as dbFile:
+                replace('db.txt', task, newTask)
 
-def replace(pattern, subst):
-    global dbFile
+def replace(file_path, pattern, subst):
     #Create temp file
     fh, abs_path = mkstemp()
     with fdopen(fh,'w') as new_file:
-        with open(dbFile) as old_file:
+        with open(file_path) as old_file:
             for line in old_file:
                 new_file.write(line.replace(pattern, subst))
     #Move new file
-    move(abs_path, dbFile)
+    move(abs_path, file_path)
 
 def getTime(taskName):
     lines = [line.rstrip('\n') for line in open('db.txt')]
@@ -113,7 +110,7 @@ def getTime(taskName):
     
 print("----------------------------\n         WORK LOGGER \n----------------------------")
 taskName = input("What is the name of the task? ")
-taskName = taskName.lower() # Converts input string to lowercase
-checkDB(taskName) 
+taskName = taskName.lower()
+checkDB(taskName)
 beginTask()
 endTask()

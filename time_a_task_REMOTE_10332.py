@@ -113,7 +113,7 @@ def getTime(taskName):
     
 print("----------------------------\n         WORK LOGGER \n----------------------------")
 taskName = input("What is the name of the task? ")
-taskName = taskName.lower() # Converts input string to lowercase
-checkDB(taskName) 
+taskName = taskName.lower()
+checkDB(taskName)
 beginTask()
 endTask()

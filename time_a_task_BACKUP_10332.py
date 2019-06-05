@@ -57,7 +57,11 @@ def checkDB(taskName):
     dbString.read()
     if taskName in open(dbFile).read():
         # Task already exists
+<<<<<<< HEAD
+        lines = [line.rstrip('\n') for line in open("db.txt")]
+=======
         lines = [line.rstrip('\n') for line in open(dbFile)]
+>>>>>>> develop
         for task in lines:
             split = task.split(":")
             name = split[0]
@@ -66,12 +70,21 @@ def checkDB(taskName):
                 prevTime = int(time)
     else:
         # Task does not yet exist
+<<<<<<< HEAD
+        if os.stat("db.txt").st_size > 0:
+            with open("db.txt", 'a') as db:
+                print(taskName + " was added to the database")
+                db.write('\n' + taskName  + ":0")
+        else:
+            with open("db.txt", 'a') as db:
+=======
         if os.stat(dbFile).st_size > 0:
             with open(dbFile, 'a') as db:
                 print(taskName + " was added to the database")
                 db.write('\n' + taskName  + ":0")
         else:
             with open(dbFile, 'a') as db:
+>>>>>>> develop
                 print(taskName + " was added to the database")
                 db.write(taskName  + ":0")
 
@@ -113,7 +126,7 @@ def getTime(taskName):
     
 print("----------------------------\n         WORK LOGGER \n----------------------------")
 taskName = input("What is the name of the task? ")
-taskName = taskName.lower() # Converts input string to lowercase
-checkDB(taskName) 
+taskName = taskName.lower()
+checkDB(taskName)
 beginTask()
 endTask()
