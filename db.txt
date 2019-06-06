@@ -1,1 +1,2 @@
-work logger:23
+test1:3
+test2:1
