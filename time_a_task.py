@@ -50,7 +50,6 @@ def convertSeconds(elapsedSeconds):
     elapsedSeconds %= 60
     seconds = elapsedSeconds
     print('{:.0f}'.format(hour),"h", '{:.0f}'.format(minutes),"m", '{:.0f}'.format(seconds),"s")
-    return hour + minutes + seconds
 
 def checkDB(taskName):
     global prevTime
@@ -118,3 +117,4 @@ taskName = taskName.lower() # Converts input string to lowercase
 checkDB(taskName) 
 beginTask()
 endTask()
+
